@@ -10,6 +10,9 @@
       <form action="/cats/{{this._id}}" method="POST">
         <button type="submit" style="cursor: pointer;">delete</button>
       </form>
+      <form action="/cats/edit/{{this._id}}" method="GET">
+        <button type="submit" style="cursor: pointer;">edit</button>
+      </form>
     </li>
   {{/each}}
   </ul>

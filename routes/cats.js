@@ -26,6 +26,18 @@ router.get('/create', (req, res) => {
   res.render('cats/create');
 });
 
+router.get('/edit/:id', (req, res, next) => {
+  const { id } = req.params;
+  Cat.findById(id)
+
+    .then(cat => {
+      res.render("cats/edit", { cat });
+    })
+    .catch(error => {
+      next(error);
+    });
+});
+
 router.get('/:id', (req, res, next) => {
   const { id } = req.params;
   Cat.findById(id)
@@ -58,6 +70,19 @@ router.post('/:id', (req, res, next) => {
     .then(cat => {
       console.log('delete', cat);
       res.status(301);
+      res.redirect('/cats');
+    })
+    .catch(error => {
+      next(error);
+    });
+});
+
+router.post('/edit/:id', (req, res, next) => {
+  const { id } = req.params;
+  const name = req.body;
+  Cat.findByIdAndUpdate(id, name, { new:true })
+    .then(updateCat => {
+      console.log('edit', updateCat);
       res.redirect('/cats');
     })
     .catch(error => {
